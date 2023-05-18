@@ -1,4 +1,4 @@
-import { Container, Grid, Paper, Typography } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import { IMovie } from "../interfaces/IMovie";
 import Movie from "./Movie";
 import InformationBox from "./InformationBox";

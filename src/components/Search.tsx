@@ -2,10 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import ErrorBoundary from "../ErrorBoundary";
 import { useState } from "react";
 import fetchSearch from "../data/fetchSearch";
-import { Container, Divider, InputBase, Paper } from "@mui/material";
+import { Container, InputBase, Paper } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import ClearIcon from "@mui/icons-material/Clear";
 import Results from "./Results";
 
 const Search = () => {
@@ -22,6 +21,7 @@ const Search = () => {
           elevation={12}
           component="form"
           sx={{
+            my: 4,
             p: "8px 16px",
             display: "flex",
             alignItems: "center",
@@ -44,12 +44,7 @@ const Search = () => {
             inputProps={{ "aria-label": "search for a movie" }}
           />
           <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
-            <SearchIcon />
-          </IconButton>
-
-          <Divider sx={{ height: 36, m: 0.5 }} orientation="vertical" />
-          <IconButton sx={{ p: "10px" }} aria-label="directions">
-            <ClearIcon />
+            <SearchIcon fontSize="large" />
           </IconButton>
         </Paper>
       </Container>

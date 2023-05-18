@@ -11,8 +11,9 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { func } from "prop-types";
 import ErrorBoundary from "../ErrorBoundary";
+import Directors from "./Directors";
+import Actors from "./Actors";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -59,13 +60,13 @@ const MovieDetails = () => {
   return (
     <Box sx={{ backgroundImage: `url(${backdrop})`, backgroundSize: "cover" }}>
       <Container
-        sx={{ backgroundColor: "rgb(248, 248, 255, .85)", paddingTop: "1em" }}
+        sx={{ backgroundColor: "rgb(248, 248, 255, .8)", paddingTop: "1em" }}
       >
-        <Typography variant="h1" fontSize={48} my={4} align="center">
+        <Typography variant="h2" my={8} align="center">
           {movie.title}
         </Typography>
 
-        <Grid container spacing={2} mt={4}>
+        <Grid container spacing={2} mt={10}>
           <Grid item xs={12} sm={6} lg={4}>
             <CardMedia
               component="img"
@@ -75,7 +76,14 @@ const MovieDetails = () => {
           </Grid>
 
           <Grid item xs={12} sm={6} lg={8}>
-            <Typography>Ratings: {movie.vote_average}/10</Typography>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography variant="body1">
+                TMBD rating: {movie.vote_average.toFixed(1)}/10
+              </Typography>
+              <Typography variant="caption">
+                &nbsp; (number of votes: {movie.vote_count})
+              </Typography>
+            </Box>
 
             <Box mt={1}>
               {movie.genres.map((genre) => (
@@ -83,8 +91,7 @@ const MovieDetails = () => {
                   key={genre.id}
                   label={genre.name}
                   size="small"
-                  color="primary"
-                  sx={{ marginRight: "1em" }}
+                  sx={{ mr: 1 }}
                 />
               ))}
             </Box>
@@ -106,6 +113,10 @@ const MovieDetails = () => {
             </Typography>
           </Grid>
         </Grid>
+
+        <Directors movieId={movie.id} />
+
+        <Actors movieId={movie.id} />
       </Container>
     </Box>
   );
