@@ -10,7 +10,6 @@ const fetchSearch: QueryFunction<
   let url = `${Settings.BFF}popular`;
 
   if (title.length) {
-    title.replace(/\s/g, "");
     url = `${Settings.BFF}search/${title}`;
   }
 

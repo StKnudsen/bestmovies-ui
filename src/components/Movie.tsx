@@ -71,7 +71,13 @@ const Movie = (props: IProps) => {
 
           <Box overflow={"hidden"} maxHeight={24}>
             {genres.map((genre) => (
-              <Chip key={genre} label={genre} size="small" variant="outlined" />
+              <Chip
+                key={genre}
+                label={genre}
+                size="small"
+                variant="outlined"
+                sx={{ mr: 0.5 }}
+              />
             ))}
           </Box>
 
@@ -80,7 +86,7 @@ const Movie = (props: IProps) => {
           </Typography>
         </CardContent>
         <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography>Rating: {props.vote_average}</Typography>
+          <Typography ml={1}>Rating: {props.vote_average}</Typography>
           <Button
             size="small"
             variant="outlined"
