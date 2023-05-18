@@ -1,16 +1,13 @@
 import { Container, Grid, Paper, Typography } from "@mui/material";
 import { IMovie } from "../interfaces/IMovie";
 import Movie from "./Movie";
+import InformationBox from "./InformationBox";
 
 const Results = ({ movies }: { movies: IMovie[] }) => {
   return (
     <Container sx={{ py: 4 }} maxWidth={"xl"}>
       {!movies.length ? (
-        <Paper elevation={3}>
-          <Typography variant="h5" textAlign={"center"} mt={12} py={8}>
-            No movies found.
-          </Typography>
-        </Paper>
+        <InformationBox message="No movies found." />
       ) : (
         <Grid container spacing={4}>
           {movies.map((movie) => (

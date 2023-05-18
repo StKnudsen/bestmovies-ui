@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { IGenre } from "../interfaces/IGenre";
 import { Settings } from "../settings";
 import useGenreList from "../hooks/useGenreList";
 import {
@@ -51,7 +50,7 @@ const Movie = (props: IProps) => {
   return (
     <Grid item key={props.id} xs={12} sm={6} md={4} xl={3}>
       <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-        <Link to={`/details/${props.id}`}>
+        <Link to={`/movie/${props.id}`}>
           <CardMedia
             component="img"
             image={poster}
@@ -86,7 +85,7 @@ const Movie = (props: IProps) => {
             size="small"
             variant="outlined"
             component={Link}
-            to={`/details/${props.id}`}
+            to={`/movie/${props.id}`}
           >
             View
           </Button>

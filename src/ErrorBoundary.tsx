@@ -1,6 +1,7 @@
 import { Container, Paper, Typography } from "@mui/material";
 import { Component, ErrorInfo, ReactElement } from "react";
 import { Link } from "react-router-dom";
+import InformationBox from "./components/InformationBox";
 
 interface IProps {
   children: ReactElement;
@@ -21,12 +22,7 @@ class ErrorBoundary extends Component<IProps> {
     if (this.state.hasError) {
       return (
         <Container>
-          <Paper elevation={3}>
-            <Typography variant="h5" textAlign={"center"} mt={12} py={8}>
-              There was an error. <Link to="/">Click here</Link> to back to the
-              home page.
-            </Typography>
-          </Paper>
+          <InformationBox message="There was an error. Go back to homepage" />
         </Container>
       );
     }
