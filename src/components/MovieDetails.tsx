@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import fetchMovie from "../data/fetchMovie";
 import InformationBox from "./InformationBox";
-import { Settings } from "../settings";
+import { config } from "../config";
 import {
   Box,
   CardMedia,
@@ -44,12 +44,12 @@ const MovieDetails = () => {
 
   let backdrop = "https://placehold.co/500x750?text=Missing+Backdrop";
   if (movie.backdrop_path) {
-    backdrop = `${Settings.IMG_URL}${movie.backdrop_path}`;
+    backdrop = `${config.IMG_URL}${movie.backdrop_path}`;
   }
 
   let poster = "https://placehold.co/500x750?text=Missing+Poster";
   if (movie.poster_path) {
-    poster = `${Settings.IMG_URL}${movie.poster_path}`;
+    poster = `${config.IMG_URL}${movie.poster_path}`;
   }
 
   let imdbUrl = "https://www.imdb.com";

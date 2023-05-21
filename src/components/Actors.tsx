@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import InformationBox from "./InformationBox";
 import { Box, Card, CardMedia, Grid, Typography } from "@mui/material";
 import fetchCredits from "../data/fetchCredits";
-import { Settings } from "../settings";
+import { config } from "../config";
 
 interface IProps {
   movieId: number;
@@ -45,7 +45,7 @@ const Actors = (props: IProps) => {
                   sx={{ width: "6rem", maxHeight: "8rem" }}
                   image={
                     actor.profile_path
-                      ? `${Settings.IMG_URL}${actor.profile_path}`
+                      ? `${config.IMG_URL}${actor.profile_path}`
                       : "https://placehold.co/96x144?text=No+photo"
                   }
                 />

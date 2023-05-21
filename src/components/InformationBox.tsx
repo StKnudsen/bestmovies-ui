@@ -7,7 +7,13 @@ interface IProps {
 const InformationBox = (props: IProps) => {
   return (
     <Paper elevation={3}>
-      <Typography variant="h5" textAlign={"center"} mt={12} py={8} maxWidth={'md'}>
+      <Typography
+        variant="h5"
+        textAlign={"center"}
+        mt={12}
+        py={8}
+        maxWidth={"md"}
+      >
         {props.message}
       </Typography>
     </Paper>

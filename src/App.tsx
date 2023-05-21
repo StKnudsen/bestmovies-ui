@@ -9,6 +9,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Search from "./components/Search";
 import MovieDetails from "./components/MovieDetails";
+import NavigationBar from "./components/NavigationBar";
+import Login from "./components/Login";
+import UserProfile from "./components/UserProfile";
+import AuthRoute from "./components/AuthRoute";
+import { initializeApp } from "firebase/app";
+import { config } from "./config";
+
+initializeApp(config.firebase);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,8 +32,19 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
+          <NavigationBar />
           <Routes>
+            <Route
+              path="/profile"
+              element={
+                <AuthRoute>
+                  <UserProfile />
+                </AuthRoute>
+              }
+            />
+
             <Route path="/movie/:id" element={<MovieDetails />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Search />} />
           </Routes>
         </QueryClientProvider>
@@ -41,4 +60,5 @@ if (!container) {
 }
 
 const root = createRoot(container);
+
 root.render(<App />);
