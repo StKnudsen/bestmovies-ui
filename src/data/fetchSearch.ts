@@ -1,16 +1,16 @@
 import { QueryFunction } from "@tanstack/react-query";
 import { IMovieList } from "../interfaces/IMovieList";
-import { Settings } from "../settings";
+import { config } from "../config";
 
 const fetchSearch: QueryFunction<
   IMovieList,
   ["search", { title: string }]
 > = async ({ queryKey }) => {
   const { title } = queryKey[1];
-  let url = `${Settings.BFF}popular`;
+  let url = `${config.BFF}popular`;
 
   if (title.length) {
-    url = `${Settings.BFF}search/${title}`;
+    url = `${config.BFF}search/${title}`;
   }
 
   const apiResponse = await fetch(url);

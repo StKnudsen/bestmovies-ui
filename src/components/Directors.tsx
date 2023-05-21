@@ -2,7 +2,7 @@ import { Box, Card, CardMedia, Grid, Typography } from "@mui/material";
 import fetchCredits from "../data/fetchCredits";
 import InformationBox from "./InformationBox";
 import { useQuery } from "@tanstack/react-query";
-import { Settings } from "../settings";
+import { config } from "../config";
 
 interface IProps {
   movieId: number;
@@ -47,7 +47,7 @@ const Directors = (props: IProps) => {
                   sx={{ width: "6rem" }}
                   image={
                     director.profile_path
-                      ? `${Settings.IMG_URL}${director.profile_path}`
+                      ? `${config.IMG_URL}${director.profile_path}`
                       : "https://placehold.co/96x144?text=No+photo"
                   }
                 />

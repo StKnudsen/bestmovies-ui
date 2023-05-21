@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Settings } from "../settings";
+import { config } from "../config";
 import useGenreList from "../hooks/useGenreList";
 import {
   Box,
@@ -30,7 +30,7 @@ const Movie = (props: IProps) => {
   let poster = "https://placehold.co/500x750?text=Missing+Poster";
 
   if (props.poster_path) {
-    poster = `${Settings.IMG_URL}${props.poster_path}`;
+    poster = `${config.IMG_URL}${props.poster_path}`;
   }
 
   useEffect(() => {
