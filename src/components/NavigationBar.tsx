@@ -110,17 +110,17 @@ const NavigationBar = () => {
                 </IconButton>
                 <p>Notifications</p>
             </MenuItem> */}
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
+      <MenuItem>
+        <AccountCircle />
+        {auth.currentUser ? (
+          <MenuItem>
+            <Link to={"/profile"}>Profile</Link>
+          </MenuItem>
+        ) : (
+          <MenuItem>
+            <Link to={"/login"}>Login</Link>
+          </MenuItem>
+        )}
       </MenuItem>
     </Menu>
   );
