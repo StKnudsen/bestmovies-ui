@@ -5,18 +5,39 @@ import InformationBox from "./InformationBox";
 import { config } from "../config";
 import {
   Box,
+  Button,
   CardMedia,
   Chip,
   Container,
+  Divider,
   Grid,
   Typography,
 } from "@mui/material";
 import ErrorBoundary from "../ErrorBoundary";
 import Directors from "./Directors";
 import Actors from "./Actors";
+import MovieComments from "./MovieReviews";
+import { getAuth } from "firebase/auth";
+import { Link } from "react-router-dom";
+import { IReview } from "../interfaces/IReview";
 
 const MovieDetails = () => {
   const { id } = useParams();
+  const auth = getAuth();
+
+  // DUMMY DATA FOR Reviews
+  const comments: IReview[] = [
+    {
+        id: "1234",
+        name: "Jane",
+        comment: "Ejes bakken af nogen" 
+    },
+    {
+        id: "4567",
+        name: "John",
+        comment: "Ah hvad?" 
+    },
+];
 
   if (!id) {
     throw new Error("Error in parsing the movie id");
@@ -58,15 +79,17 @@ const MovieDetails = () => {
   }
 
   return (
-    <Box sx={{ backgroundImage: `url(${backdrop})`, backgroundSize: "cover" }}>
+    <Box sx={{ backgroundImage: `url(${backdrop})`, backgroundSize: "cover", pb: 8 }}>
       <Container
-        sx={{ backgroundColor: "rgb(248, 248, 255, .8)", paddingTop: "1em" }}
+        sx={{ backgroundColor: "rgb(248, 248, 255, .8)", pt: 4 }}
       >
-        <Typography variant="h2" my={8} align="center">
+        <Divider />
+        <Typography variant="h2" my={2} align="center">
           {movie.title}
         </Typography>
+        <Divider />
 
-        <Grid container spacing={2} mt={10}>
+        <Grid container spacing={2} mt={2}>
           <Grid item xs={12} sm={6} lg={4}>
             <CardMedia
               component="img"
@@ -75,10 +98,11 @@ const MovieDetails = () => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={6} lg={8}>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Grid item xs={12} sm={6} lg={8} display={'flex'} flexDirection={'column'}>
+            <Box flex={1}>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography variant="body1">
-                TMBD rating: {movie.vote_average.toFixed(1)}/10
+                TMBb rating: {movie.vote_average.toFixed(1)}/10
               </Typography>
               <Typography variant="caption">
                 &nbsp; (number of votes: {movie.vote_count})
@@ -108,15 +132,30 @@ const MovieDetails = () => {
               {movie.overview}
             </Typography>
 
-            <Typography mt={4}>
-              <a href={imdbUrl}>IMDB</a>
-            </Typography>
+            <Button 
+              component={Link} 
+              to={imdbUrl} 
+              variant="contained" 
+              sx={{ mt: 4}}
+              size="small"
+            >IMDb</Button>
+            </Box>
+            
+
+            <Box mt={2}>
+            { auth.currentUser?.displayName 
+                ? (<Button>Add to my top list</Button>)
+                : (<Button component={Link} to="/login">Log in to add to top list</Button>)
+            }
+            </Box>
           </Grid>
         </Grid>
-
-        <Directors movieId={movie.id} />
-
-        <Actors movieId={movie.id} />
+        
+        <Box sx={{ py: 4 }}>
+          <Directors movieId={movie.id} />
+          <Actors movieId={movie.id} />
+          <MovieComments movieId={movie.id} comments={comments}/>
+        </Box>
       </Container>
     </Box>
   );
