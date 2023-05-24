@@ -16,12 +16,11 @@ const Search = () => {
 
   return (
     <>
-      <Container sx={{ py: 8, display: "flex", justifyContent: "center" }}>
+      <Container sx={{ py: 6, display: "flex", justifyContent: "center" }}>
         <Paper
           elevation={12}
           component="form"
           sx={{
-            my: 4,
             p: "8px 16px",
             display: "flex",
             alignItems: "center",

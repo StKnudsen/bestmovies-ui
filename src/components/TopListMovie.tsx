@@ -41,11 +41,6 @@ const TopListMovie = (props: IProps) => {
     poster = `${config.IMG_URL}${movie.poster_path}`;
   }
 
-  let imdbUrl = "https://www.imdb.com";
-  if (movie.imdb_id) {
-    imdbUrl = `https://www.imdb.com/title/${movie.imdb_id}`;
-  }
-
   return (
     <Card
       key={movieId}

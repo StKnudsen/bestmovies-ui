@@ -1,7 +1,8 @@
-import { Box, Card, CardMedia, Grid, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardMedia, Typography } from "@mui/material";
 import fetchCredits from "../data/fetchCredits";
 import InformationBox from "./InformationBox";
 import { useQuery } from "@tanstack/react-query";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { config } from "../config";
 
 interface IProps {
@@ -31,41 +32,45 @@ const Directors = (props: IProps) => {
   });
 
   return (
-    <Grid container spacing={2} mt={4}>
-      <Grid item xs={12} sm={4} lg={6} textAlign={"center"}>
-        <Typography variant="h4" mt={1}>
-          {directors.length > 1 ? "Directors" : "Director"}
-        </Typography>
-      </Grid>
-      <Grid item xs={12} sm={8} lg={6} pt={8}>
-        {directors.map((director) => {
-          if (director.job === "Director") {
-            return (
-              <Card key={director.id} sx={{ display: "flex", my: 2 }}>
-                <CardMedia
-                  component="img"
-                  sx={{ width: "6rem" }}
-                  image={
-                    director.profile_path
-                      ? `${config.IMG_URL}${director.profile_path}`
-                      : "https://placehold.co/96x144?text=No+photo"
-                  }
-                />
-                <Box sx={{ display: "flex", flexDirection: "column", p: 2 }}>
-                  <Typography variant="h5">{director.name}</Typography>
-                  <Typography variant="caption">
-                    Popularity: {director.popularity.toPrecision(3)}
-                  </Typography>
-                  <Typography variant="subtitle1" mt={1}>
-                    Know for: {director.known_for_department}
-                  </Typography>
-                </Box>
-              </Card>
-            );
-          }
-        })}
-      </Grid>
-    </Grid>
+    <Accordion sx={{ backgroundColor: 'ghostwhite' }}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+        id="panel-directors"
+      >
+        <Typography variant="h4">
+           {directors.length > 1 ? "Directors" : "Director"}
+         </Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+         {directors.map((director) => {
+           if (director.job === "Director") {
+             return (
+               <Card key={director.id} sx={{ display: "flex" }}>
+                 <CardMedia
+                   component="img"
+                   sx={{ width: "6rem" }}
+                   image={
+                     director.profile_path
+                       ? `${config.IMG_URL}${director.profile_path}`
+                       : "https://placehold.co/96x144?text=No+photo"
+                   }
+                 />
+                 <Box sx={{ display: "flex", flexDirection: "column", p: 2 }}>
+                   <Typography variant="h5">{director.name}</Typography>
+                   <Typography variant="caption">
+                     Popularity: {director.popularity.toPrecision(3)}
+                   </Typography>
+                   <Typography variant="subtitle1" mt={1}>
+                     Know for: {director.known_for_department}
+                   </Typography>
+                 </Box>
+               </Card>
+             );
+           }
+         })}
+      </AccordionDetails>
+    </Accordion>
   );
 };
 
