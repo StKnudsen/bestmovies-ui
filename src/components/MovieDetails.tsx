@@ -16,7 +16,7 @@ import {
 import ErrorBoundary from "../ErrorBoundary";
 import Directors from "./Directors";
 import Actors from "./Actors";
-import MovieComments from "./MovieReviews";
+import MovieReviews from "./MovieReviews";
 import { getAuth } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { IReview } from "../interfaces/IReview";
@@ -28,16 +28,18 @@ const MovieDetails = () => {
   // DUMMY DATA FOR Reviews
   const comments: IReview[] = [
     {
-        id: "1234",
-        name: "Jane",
-        comment: "Ejes bakken af nogen" 
+      id: "1234",
+      name: "Jane",
+      rating: 7,
+      comment: "Ejes bakken af nogen",
     },
     {
-        id: "4567",
-        name: "John",
-        comment: "Ah hvad?" 
+      id: "4567",
+      name: "John",
+      rating: 5,
+      comment: "Ah hvad?",
     },
-];
+  ];
 
   if (!id) {
     throw new Error("Error in parsing the movie id");
@@ -79,10 +81,14 @@ const MovieDetails = () => {
   }
 
   return (
-    <Box sx={{ backgroundImage: `url(${backdrop})`, backgroundSize: "cover", pb: 8 }}>
-      <Container
-        sx={{ backgroundColor: "rgb(248, 248, 255, .8)", pt: 4 }}
-      >
+    <Box
+      sx={{
+        backgroundImage: `url(${backdrop})`,
+        backgroundSize: "cover",
+        pb: 8,
+      }}
+    >
+      <Container sx={{ backgroundColor: "rgb(248, 248, 255, .8)", pt: 4 }}>
         <Divider />
         <Typography variant="h2" my={2} align="center">
           {movie.title}
@@ -98,63 +104,74 @@ const MovieDetails = () => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={6} lg={8} display={'flex'} flexDirection={'column'}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            lg={8}
+            display={"flex"}
+            flexDirection={"column"}
+          >
             <Box flex={1}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="body1">
-                TMBb rating: {movie.vote_average.toFixed(1)}/10
+                <Typography variant="body1">
+                  TMBb rating: {movie.vote_average.toFixed(1)}/10
+                </Typography>
+                <Typography variant="caption">
+                  &nbsp; (number of votes: {movie.vote_count})
+                </Typography>
+              </Box>
+
+              <Box mt={1}>
+                {movie.genres.map((genre) => (
+                  <Chip
+                    key={genre.id}
+                    label={genre.name}
+                    size="small"
+                    sx={{ mr: 1 }}
+                  />
+                ))}
+              </Box>
+
+              <Typography variant="body1" mt={2}>
+                Runtime: {movie.runtime} minutes
               </Typography>
-              <Typography variant="caption">
-                &nbsp; (number of votes: {movie.vote_count})
+
+              <Typography variant="subtitle1">
+                Original title: {movie.original_title}
               </Typography>
+
+              <Typography variant="body1" mt={2}>
+                {movie.overview}
+              </Typography>
+
+              <Button
+                component={Link}
+                to={imdbUrl}
+                variant="contained"
+                sx={{ mt: 4 }}
+                size="small"
+              >
+                IMDb
+              </Button>
             </Box>
-
-            <Box mt={1}>
-              {movie.genres.map((genre) => (
-                <Chip
-                  key={genre.id}
-                  label={genre.name}
-                  size="small"
-                  sx={{ mr: 1 }}
-                />
-              ))}
-            </Box>
-
-            <Typography variant="body1" mt={2}>
-              Runtime: {movie.runtime} minutes
-            </Typography>
-
-            <Typography variant="subtitle1">
-              Original title: {movie.original_title}
-            </Typography>
-
-            <Typography variant="body1" mt={2}>
-              {movie.overview}
-            </Typography>
-
-            <Button 
-              component={Link} 
-              to={imdbUrl} 
-              variant="contained" 
-              sx={{ mt: 4}}
-              size="small"
-            >IMDb</Button>
-            </Box>
-            
 
             <Box mt={2}>
-            { auth.currentUser?.displayName 
-                ? (<Button>Add to my top list</Button>)
-                : (<Button component={Link} to="/login">Log in to add to top list</Button>)
-            }
+              {auth.currentUser ? (
+                <Button variant="outlined">Add to Top list</Button>
+              ) : (
+                <Button component={Link} to="/login" variant="outlined">
+                  Top list? Log in to add
+                </Button>
+              )}
             </Box>
           </Grid>
         </Grid>
-        
+
         <Box sx={{ py: 4 }}>
           <Directors movieId={movie.id} />
           <Actors movieId={movie.id} />
-          <MovieComments movieId={movie.id} comments={comments}/>
+          <MovieReviews movieId={movie.id} comments={comments} />
         </Box>
       </Container>
     </Box>

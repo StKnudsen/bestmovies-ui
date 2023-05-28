@@ -137,7 +137,7 @@ const NavigationBar = () => {
             </Link>
 
             <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            {/* <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <IconButton
                 size="large"
                 edge="end"
@@ -161,12 +161,33 @@ const NavigationBar = () => {
               >
                 <MoreIcon />
               </IconButton>
-            </Box>
+            </Box> */}
+
+            {/* <Box> */}
+            <IconButton>
+              <AccountCircle />
+              {auth.currentUser ? (
+                <MenuItem>
+                  <Link to={"/profile"}>Profile</Link>
+                </MenuItem>
+              ) : (
+                <MenuItem>
+                  <Link to={"/login"}>Login</Link>
+                </MenuItem>
+              )}
+            </IconButton>
+            {/* </Box> */}
           </Toolbar>
         </Container>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+
+      {/* 
+        <MenuItem>
+          <Link to={"/login"}>Login</Link>
+        </MenuItem> */}
+
+      {/* {renderMobileMenu}
+      {renderMenu} */}
     </Box>
   );
 };
