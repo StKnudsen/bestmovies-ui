@@ -14,6 +14,7 @@ import TopList from "./TopList";
 import { useQuery } from "@tanstack/react-query";
 import fetchUser from "../data/fetchUser";
 import ErrorBoundary from "../ErrorBoundary";
+import addUser from "../data/addUser";
 
 const UserProfile = () => {
   const auth = getAuth();
@@ -29,8 +30,7 @@ const UserProfile = () => {
     throw new Error("Error with the user id");
   }
 
-  const user = useQuery(["user", auth.currentUser?.uid], fetchUser);
-  console.log(user);
+  const user = addUser().then();
 
   return (
     <>
@@ -56,9 +56,6 @@ const UserProfile = () => {
             <Typography component="div" variant="caption" sx={{ p: 2 }}>
               Signed in with google id: {auth.currentUser?.uid}
             </Typography>
-            {/* <Typography component="div" variant="caption" sx={{ p: 2 }}>
-              {user.data?.id}: {user.data?.username}
-            </Typography> */}
           </Box>
           <CardMedia
             component="img"
