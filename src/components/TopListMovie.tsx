@@ -73,7 +73,7 @@ const TopListMovie = (props: IProps) => {
             component={Link}
             to={`/movie/${movie.id}`}
           >
-            Go to details
+            Details
           </Button>
         </Box>
       </Box>

@@ -11,6 +11,9 @@ import {
 import { getAuth, signOut } from "firebase/auth";
 import GoogleIcon from "@mui/icons-material/Google";
 import TopList from "./TopList";
+import { useQuery } from "@tanstack/react-query";
+import fetchUser from "../data/fetchUser";
+import ErrorBoundary from "../ErrorBoundary";
 
 const UserProfile = () => {
   const auth = getAuth();
@@ -21,6 +24,13 @@ const UserProfile = () => {
   if (auth.currentUser !== null) {
     profileImage = auth.currentUser?.photoURL;
   }
+
+  if (!auth.currentUser?.uid) {
+    throw new Error("Error with the user id");
+  }
+
+  const user = useQuery(["user", auth.currentUser?.uid], fetchUser);
+  console.log(user);
 
   return (
     <>
@@ -46,6 +56,9 @@ const UserProfile = () => {
             <Typography component="div" variant="caption" sx={{ p: 2 }}>
               Signed in with google id: {auth.currentUser?.uid}
             </Typography>
+            {/* <Typography component="div" variant="caption" sx={{ p: 2 }}>
+              {user.data?.id}: {user.data?.username}
+            </Typography> */}
           </Box>
           <CardMedia
             component="img"
@@ -61,4 +74,10 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default function UserProfileErrorBoundary() {
+  return (
+    <ErrorBoundary>
+      <UserProfile />
+    </ErrorBoundary>
+  );
+}

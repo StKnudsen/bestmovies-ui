@@ -2,6 +2,7 @@
 export const config = {
   BFF: "https://bestmovies-bff.azurewebsites.net/",
   IMG_URL: "https://image.tmdb.org/t/p/w500/",
+  BMDB: "https://bestmoviesneo4j.azurewebsites.net/",
   firebase: {
     apiKey: "AIzaSyDYJ8M5iWk7-sx6mAUNFCtv_zNR8OyxlcE",
     authDomain: "bestmovies-bf7fd.firebaseapp.com",

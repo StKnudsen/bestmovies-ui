@@ -2,7 +2,6 @@ import { Card, Container, Typography } from "@mui/material";
 import TopListMovie from "./TopListMovie";
 
 const TopList = () => {
-
   // DUMMY DATA!!
   const toplist = [502356, 447365, 76600, 603692, 220845];
 
