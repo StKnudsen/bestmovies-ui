@@ -5,7 +5,7 @@ import fetchSearch from "../data/fetchSearch";
 import { Container, InputBase, Paper } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import Results from "./Results";
+import Results from "../components/Results";
 
 const Search = () => {
   const [searchParams, setSearchParams] = useState({

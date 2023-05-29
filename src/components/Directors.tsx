@@ -54,7 +54,7 @@ const Directors = (props: IProps) => {
         {directors.map((director) => {
           if (director.job === "Director") {
             return (
-              <Card key={director.id} sx={{ display: "flex" }}>
+              <Card key={director.id} sx={{ display: "flex", my: 2 }}>
                 <CardMedia
                   component="img"
                   sx={{ width: "6rem" }}

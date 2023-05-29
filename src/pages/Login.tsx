@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import {
   Avatar,
@@ -30,6 +30,12 @@ const Login = () => {
         setAuthing(false);
       });
   };
+
+  useEffect(() => {
+    if (auth.currentUser?.displayName) {
+      navigate("/profile");
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container maxWidth="xs" sx={{ pt: 8 }}>
