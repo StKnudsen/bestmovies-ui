@@ -13,9 +13,6 @@ jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [ 14, 16, 18 ]
 
     name: Build and Deploy Job
     steps:
@@ -25,8 +22,6 @@ jobs:
 
       - name: lint and format
         uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node }}
       - run: npm run lint
       - run: npm run format
 
