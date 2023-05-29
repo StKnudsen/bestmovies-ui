@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import fetchMovie from "../data/fetchMovie";
-import InformationBox from "./InformationBox";
+import InformationBox from "../components/InformationBox";
 import { config } from "../config";
 import {
   Box,
@@ -14,16 +14,21 @@ import {
   Typography,
 } from "@mui/material";
 import ErrorBoundary from "../ErrorBoundary";
-import Directors from "./Directors";
-import Actors from "./Actors";
-import MovieReviews from "./MovieReviews";
+import Directors from "../components/Directors";
+import Actors from "../components/Actors";
+import MovieReviews from "../components/MovieReviews";
 import { getAuth } from "firebase/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IReview } from "../interfaces/IReview";
+import { useEffect, useState } from "react";
+import { IToplist } from "../interfaces/IToplist";
 
 const MovieDetails = () => {
   const { id } = useParams();
+  const [toplist, setToplist] = useState<IToplist>();
+  const [topListMovie, setTopListMovie] = useState(false);
   const auth = getAuth();
+  const navigate = useNavigate();
 
   // DUMMY DATA FOR Reviews
   const comments: IReview[] = [
@@ -31,15 +36,37 @@ const MovieDetails = () => {
       id: "1234",
       name: "Jane",
       rating: 7,
-      comment: "Ejes bakken af nogen",
+      comment:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos voluptates quidem nobis exercitationem quaerat at accusantium eos neque veniam harum. Ratione non officiis, culpa iusto expedita dolores reprehenderit fugit illo.",
     },
     {
       id: "4567",
       name: "John",
       rating: 5,
-      comment: "Ah hvad?",
+      comment:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci iure a odio fugit, sunt recusandae sint quibusdam corrupti ex, rerum magnam similique laudantium quo, consectetur amet nemo voluptatum inventore. Quod!",
     },
   ];
+
+  useEffect(() => {
+    if (auth.currentUser?.uid) {
+      fetch(`${config.BFF}toplist/${auth.currentUser?.uid}`)
+        .then((response) => response.json())
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        .then((data) => setToplist(data))
+        .catch((error) => console.log(error));
+
+      if (toplist) {
+        const list = toplist.TitleIds.filter((e) => e != null);
+
+        list.map((movieId) => {
+          if (id && movieId == +id) {
+            setTopListMovie(true);
+          }
+        });
+      }
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!id) {
     throw new Error("Error in parsing the movie id");
@@ -79,6 +106,23 @@ const MovieDetails = () => {
   if (movie.imdb_id) {
     imdbUrl = `https://www.imdb.com/title/${movie.imdb_id}`;
   }
+
+  const addToToplist = async () => {
+    if (!auth.currentUser?.uid) {
+      throw new Error(`Error getting google user id`);
+    }
+
+    const apiResponse = await fetch(
+      `${config.BFF}toplist/${auth.currentUser?.uid}/${id}`,
+      { method: "PUT" }
+    );
+
+    if (!apiResponse.ok) {
+      throw new Error(`Error occored while fetching user data`);
+    }
+
+    navigate("/profile");
+  };
 
   return (
     <Box
@@ -158,7 +202,13 @@ const MovieDetails = () => {
 
             <Box mt={2}>
               {auth.currentUser ? (
-                <Button variant="outlined">Add to Top list</Button>
+                <Button
+                  variant="outlined"
+                  onClick={addToToplist} // eslint-disable-line @typescript-eslint/no-misused-promises
+                  disabled={topListMovie}
+                >
+                  {topListMovie ? "In your toplist" : "Add to Top list"}
+                </Button>
               ) : (
                 <Button component={Link} to="/login" variant="outlined">
                   Top list? Log in to add

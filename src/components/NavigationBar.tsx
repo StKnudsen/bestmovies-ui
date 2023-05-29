@@ -1,7 +1,6 @@
 import {
   AppBar,
   Box,
-  Button,
   Container,
   IconButton,
   Toolbar,
@@ -50,51 +49,27 @@ const NavigationBar = () => {
 
             <Box sx={{ flexGrow: 1 }} />
 
-            {auth.currentUser ? (
-              <Link
-                to={"/profile"}
-                style={{
-                  textDecoration: "none",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <IconButton color="inherit" sx={{ mr: 2, color: "white" }}>
-                  <AccountCircle />
-                  <Typography
-                    variant="body1"
-                    noWrap
-                    color="white"
-                    component="div"
-                    ml={1}
-                  >
-                    Profile
-                  </Typography>
-                </IconButton>
-              </Link>
-            ) : (
-              <Link
-                to={"/login"}
-                style={{
-                  textDecoration: "none",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <IconButton color="inherit" sx={{ mr: 2, color: "white" }}>
-                  <AccountCircle />
-                  <Typography
-                    variant="body1"
-                    noWrap
-                    color="white"
-                    component="div"
-                    ml={1}
-                  >
-                    Login
-                  </Typography>
-                </IconButton>
-              </Link>
-            )}
+            <Link
+              to={auth.currentUser ? "/profile" : "/login"}
+              style={{
+                textDecoration: "none",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <IconButton color="inherit" sx={{ mr: 2, color: "white" }}>
+                <AccountCircle />
+                <Typography
+                  variant="body1"
+                  noWrap
+                  color="white"
+                  component="div"
+                  ml={1}
+                >
+                  Profile
+                </Typography>
+              </IconButton>
+            </Link>
           </Toolbar>
         </Container>
       </AppBar>

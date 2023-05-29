@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import {
   Box,
   Button,
@@ -10,9 +9,7 @@ import {
 } from "@mui/material";
 import { getAuth, signOut } from "firebase/auth";
 import GoogleIcon from "@mui/icons-material/Google";
-import TopList from "./TopList";
-import { useQuery } from "@tanstack/react-query";
-import fetchUser from "../data/fetchUser";
+import TopList from "../components/TopList";
 import ErrorBoundary from "../ErrorBoundary";
 import addUser from "../data/addUser";
 
@@ -30,7 +27,7 @@ const UserProfile = () => {
     throw new Error("Error with the user id");
   }
 
-  const user = addUser().then();
+  const user = addUser().then(); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   return (
     <>
@@ -48,7 +45,7 @@ const UserProfile = () => {
                 sx={{ width: "10rem", mt: 2 }}
                 variant="outlined"
                 startIcon={<GoogleIcon />}
-                onClick={() => signOut(auth)}
+                onClick={() => signOut(auth)} // eslint-disable-line @typescript-eslint/no-misused-promises
               >
                 Sign out
               </Button>
