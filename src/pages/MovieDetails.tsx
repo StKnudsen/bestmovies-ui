@@ -20,17 +20,13 @@ import MovieReviews from "../components/MovieReviews";
 import { getAuth } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { IReview } from "../interfaces/IReview";
-import { useEffect, useState } from "react";
-import { IToplist } from "../interfaces/IToplist";
 
 const MovieDetails = () => {
   const { id } = useParams();
-  const [toplist, setToplist] = useState<IToplist>();
-  const [topListMovie, setTopListMovie] = useState(false);
   const auth = getAuth();
   const navigate = useNavigate();
 
-  // DUMMY DATA FOR Reviews
+  // DUMMY DATA FOR Rating and Reviews
   const comments: IReview[] = [
     {
       id: "1234",
@@ -47,26 +43,6 @@ const MovieDetails = () => {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci iure a odio fugit, sunt recusandae sint quibusdam corrupti ex, rerum magnam similique laudantium quo, consectetur amet nemo voluptatum inventore. Quod!",
     },
   ];
-
-  useEffect(() => {
-    if (auth.currentUser?.uid) {
-      fetch(`${config.BFF}toplist/${auth.currentUser?.uid}`)
-        .then((response) => response.json())
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        .then((data) => setToplist(data))
-        .catch((error) => console.log(error));
-
-      if (toplist) {
-        const list = toplist.TitleIds.filter((e) => e != null);
-
-        list.map((movieId) => {
-          if (id && movieId == +id) {
-            setTopListMovie(true);
-          }
-        });
-      }
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!id) {
     throw new Error("Error in parsing the movie id");
@@ -205,9 +181,8 @@ const MovieDetails = () => {
                 <Button
                   variant="outlined"
                   onClick={addToToplist} // eslint-disable-line @typescript-eslint/no-misused-promises
-                  disabled={topListMovie}
                 >
-                  {topListMovie ? "In your toplist" : "Add to Top list"}
+                  Add to Top list
                 </Button>
               ) : (
                 <Button component={Link} to="/login" variant="outlined">

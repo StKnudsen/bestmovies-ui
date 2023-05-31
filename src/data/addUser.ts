@@ -18,7 +18,7 @@ const addUser = async () => {
   );
 
   if (!apiResponse.ok) {
-    throw new Error(`Error occored while fetching user data`);
+    throw new Error(`Error occored while adding user`);
   }
 
   return apiResponse.json();
